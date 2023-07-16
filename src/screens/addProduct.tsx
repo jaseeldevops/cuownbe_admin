@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { onAddProduct, onDeleteProduct } from "../methods/addProduct";
 import HomeLayout from "../widgets/homeLayout";
-import { Product } from "../modules/product";
+import { Product } from "../modules/dataStructures";
 
 export default class AddProductScreen extends Component<any> {
   constructor(props: any) {

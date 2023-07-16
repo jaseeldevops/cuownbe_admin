@@ -14,7 +14,7 @@ export default class App extends Component {
   constructor(props: any) {
     super(props);
     this.state = {
-      route: "addPurchase",
+      route: "addSale",
       routeData: null,
     };
   }

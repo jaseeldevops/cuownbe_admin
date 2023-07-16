@@ -3,6 +3,7 @@ import HomeLayout from "../widgets/homeLayout";
 import { getSingelSale, onAddSale, onDeleteSale } from "../methods/addSale";
 import { ProductInput } from "../widgets/input";
 import { getSearchProduct } from "../methods/product";
+import { Sale, SaleEach } from "../modules/dataStructures";
 
 export default class AddSaleScreen extends Component<any> {
   constructor(props: any) {
@@ -10,9 +11,7 @@ export default class AddSaleScreen extends Component<any> {
     this.state = {
       error: null,
       loading: false,
-      sale: {
-        list: [{}],
-      },
+      sale: new Sale(),
     };
   }
   componentDidMount(): void {
@@ -26,6 +25,30 @@ export default class AddSaleScreen extends Component<any> {
   _onClickBack = (e: any) => {
     e.preventDefault();
     this.props.setRoute("sale");
+  };
+
+  _CalculateTotal = () => {
+    const { sale }: any = this.state;
+    var total = 0;
+    for (let i = 0; i < sale.list.length; i++)
+      total +=
+        ((Number(sale.list[i].cgst) + Number(sale.list[i].sgst)) / 100) *
+          Number(sale.list[i].price) *
+          Number(sale.list[i].qty) +
+        Number(sale.list[i].price) * Number(sale.list[i].qty);
+    return total;
+  };
+
+  _CalculateTotalTax = () => {
+    const { sale }: any = this.state;
+    var total = 0;
+    for (let i = 0; i < sale.list.length; i++) {
+      total +=
+        ((Number(sale.list[i].cgst) + Number(sale.list[i].sgst)) / 100) *
+        Number(sale.list[i].price) *
+        Number(sale.list[i].qty);
+    }
+    return total;
   };
 
   render() {
@@ -75,13 +98,25 @@ export default class AddSaleScreen extends Component<any> {
             <div className="bA" style={{ width: "5%" }}>
               No
             </div>
-            <div className="bA" style={{ width: "50%" }}>
+            <div className="bA" style={{ width: "40%" }}>
               Product
             </div>
-            <div className="bA" style={{ width: "20%" }}>
+            <div className="bA" style={{ width: "10%" }}>
               Qty
             </div>
-            <div className="bA" style={{ width: "20%" }}>
+            <div className="bA" style={{ width: "10%" }}>
+              Price
+            </div>
+            <div className="bA" style={{ width: "10%" }}>
+              SGST
+            </div>
+            <div className="bA" style={{ width: "10%" }}>
+              CGST
+            </div>
+            <div className="bA" style={{ width: "10%" }}>
+              Total Tax
+            </div>
+            <div className="bA" style={{ width: "10%" }}>
               Total Price
             </div>
           </div>
@@ -103,7 +138,6 @@ export default class AddSaleScreen extends Component<any> {
                 </div>
                 <ProductInput
                   onChange={async (v: any) => {
-                    if (sale?.list?.length === k + 1) sale?.list.push({});
                     await getSearchProduct(
                       v,
                       (res: any) => (it.searches = res)
@@ -111,18 +145,21 @@ export default class AddSaleScreen extends Component<any> {
                     this.setState({ sale });
                   }}
                   onSelect={(value: any) => {
+                    if (sale?.list?.length === k + 1)
+                      sale?.list.push(new SaleEach());
                     delete it.searches;
                     it.product = value._id;
+                    it.price = value.sellingPrice / 100;
                     this.setState({ sale });
                   }}
                   datas={it.searches || []}
                   className="cAc"
-                  style={{ width: "50%" }}
+                  style={{ width: "40%" }}
                   value={it?.productName || ""}
                 />
                 <input
                   className="cAc"
-                  style={{ width: "20%" }}
+                  style={{ width: "10%" }}
                   type="number"
                   placeholder="0.00"
                   value={it.qty ?? ""}
@@ -133,32 +170,81 @@ export default class AddSaleScreen extends Component<any> {
                 />
                 <input
                   className="cAc"
-                  style={{ width: "20%" }}
+                  style={{ width: "10%" }}
                   type="number"
                   placeholder="0.00"
-                  value={it.totalPrice ?? ""}
+                  value={it.price ?? ""}
                   onChange={(e) => {
-                    it.totalPrice = e.target.value;
+                    it.price = e.target.value;
                     this.setState({ sale });
                   }}
                 />
+                <input
+                  className="cAc"
+                  style={{ width: "10%" }}
+                  type="number"
+                  placeholder="0.00"
+                  value={it.sgst ?? ""}
+                  onChange={(e) => {
+                    it.sgst = e.target.value;
+                    this.setState({ sale });
+                  }}
+                />
+                <input
+                  className="cAc"
+                  style={{ width: "10%" }}
+                  type="number"
+                  placeholder="0.00"
+                  value={it.cgst ?? ""}
+                  onChange={(e) => {
+                    it.cgst = e.target.value;
+                    this.setState({ sale });
+                  }}
+                />
+                <div className="cAb" style={{ width: "10%" }}>
+                  {(
+                    ((Number(it.cgst) + Number(it.sgst)) / 100) *
+                    Number(it.price) *
+                    Number(it.qty)
+                  ).toFixed(2)}
+                </div>
+                <div className="cAb" style={{ width: "10%" }}>
+                  {(
+                    ((Number(it.cgst) + Number(it.sgst)) / 100) *
+                      Number(it.price) *
+                      Number(it.qty) +
+                    Number(it.price) * Number(it.qty)
+                  ).toFixed(2)}
+                </div>
               </div>
             ))}
           </div>
           <div className="d">
+            <div className="dA">
+              Total Tax : {this._CalculateTotalTax().toFixed(2)}
+            </div>
+            <div className="dA">
+              Total Price :{" "}
+              {(this._CalculateTotal() - this._CalculateTotalTax()).toFixed(2)}
+            </div>
+            <div className="dA">
+              Total : {this._CalculateTotal().toFixed(2)}
+            </div>
+          </div>
+          <div className="f">
             <div className="errorMsg">{error}</div>
-            <button className="dA btn2" onClick={this._onClickBack}>
+            <button className="fA btn2" onClick={this._onClickBack}>
               Back
             </button>
             {isEdit ? (
               <button
-                className="dA btn3"
+                className="fA btn3"
                 onClick={(e) => onDeleteSale(e, this)}
               >
                 Delete
               </button>
             ) : null}
-            <button className="dA btn1" type="submit">
+            <button className="fA btn1" type="submit">
               {isEdit ? "Save" : "Add"}
             </button>
           </div>

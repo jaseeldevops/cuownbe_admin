@@ -1,3 +1,4 @@
+import { SaleEach } from "../modules/dataStructures";
 import { httpDelete, httpGet, httpPost, httpPut } from "../modules/serviceInit";
 
 export const onAddSale = (e: any, app: any) => {
@@ -10,12 +11,8 @@ export const onAddSale = (e: any, app: any) => {
   else response = httpPost("sale", body);
 
   response
-    .then(() => {
-      app.props.setRoute("sale");
-    })
-    .catch((e) => {
-      app.setState({ error: e.response.data?.msg });
-    });
+    .then(() => app.props.setRoute("sale"))
+    .catch((e) => app.setState({ error: e.response.data?.msg }));
 };
 
 export const onDeleteSale = (e: any, app: any) => {
@@ -30,7 +27,7 @@ export const onDeleteSale = (e: any, app: any) => {
 export const getSingelSale = (app: any) => {
   httpGet("sale/" + app.props.data._id)
     .then((res) => {
-      res.data?.list.push({});
+      res.data?.list.push(new SaleEach());
       app.setState({ sale: res.data });
     })
     .catch((e) => {});

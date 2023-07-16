@@ -1,6 +1,7 @@
 import { Component } from "react";
 import HomeLayout from "../widgets/homeLayout";
 import { onAddStaff, onDeleteStaff } from "../methods/addStaff";
+import { User } from "../modules/dataStructures";
 
 export default class AddStaffScreen extends Component<any> {
   constructor(props: any) {
@@ -8,11 +9,11 @@ export default class AddStaffScreen extends Component<any> {
     this.state = {
       error: null,
       loading: false,
-      staff: {},
+      staff: new User(),
     };
   }
   componentDidMount(): void {
-    if (this.props.data) this.setState({ staff: this.props.data ?? {} });
+    if (this.props.data) this.setState({ staff: this.props.data });
   }
 
   _onClickBack = (e: any) => {

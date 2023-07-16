@@ -1,3 +1,4 @@
+import { PurchaseEach } from "../modules/dataStructures";
 import { httpDelete, httpGet, httpPost, httpPut } from "../modules/serviceInit";
 
 export const onAddPurchase = (e: any, app: any) => {
@@ -24,7 +25,7 @@ export const onDeletePurchase = (e: any, app: any) => {
 export const getSingelPurchase = (app: any) => {
   httpGet("purchase/" + app.props.data._id)
     .then((res) => {
-      res.data?.list.push({});
+      res.data?.list.push(new PurchaseEach());
       app.setState({ purchase: res.data });
     })
     .catch((e) => app.setState({ error: e.response.data?.msg }));

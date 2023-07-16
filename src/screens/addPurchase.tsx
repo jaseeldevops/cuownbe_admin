@@ -7,7 +7,7 @@ import {
 } from "../methods/addPurchase";
 import { ProductInput } from "../widgets/input";
 import { getSearchProduct } from "../methods/product";
-import { Purchase, PurchaseEach } from "../modules/product";
+import { Purchase, PurchaseEach } from "../modules/dataStructures";
 
 export default class AddPurchaseScreen extends Component<any> {
   constructor(props: any) {
@@ -35,8 +35,8 @@ export default class AddPurchaseScreen extends Component<any> {
     const { purchase }: any = this.state;
     var total = 0;
     for (let i = 0; i < purchase.list.length; i++)
-      total += purchase.list[i].price * purchase.list[i].qty;
-    return total;
+      total += Number(purchase.list[i].price) * Number(purchase.list[i].qty);
+    return total.toFixed(2);
   };
 
   render() {
@@ -118,8 +118,6 @@ export default class AddPurchaseScreen extends Component<any> {
                 </div>
                 <ProductInput
                   onChange={async (v: any) => {
-                    if (purchase?.list?.length === k + 1)
-                      purchase?.list.push(new PurchaseEach());
                     await getSearchProduct(
                       v,
                       (res: any) => (it.searches = res)
@@ -127,9 +125,11 @@ export default class AddPurchaseScreen extends Component<any> {
                     this.setState({ purchase });
                   }}
                   onSelect={(value: any) => {
+                    if (purchase?.list?.length === k + 1)
+                      purchase?.list.push(new PurchaseEach());
                     delete it.searches;
                     it.product = value._id;
-                    it.price = value.purchasePrice;
+                    it.price = value.purchasePrice / 100;
                     this.setState({ purchase });
                   }}
                   datas={it.searches || []}
@@ -160,7 +160,7 @@ export default class AddPurchaseScreen extends Component<any> {
                   }}
                 />
                 <div className="cAb" style={{ width: "20%" }}>
-                  {it.price * it.qty}
+                  {(Number(it.price) * Number(it.qty)).toFixed(2)}
                 </div>
               </div>
             ))}

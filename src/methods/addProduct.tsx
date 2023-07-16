@@ -1,4 +1,4 @@
-import { Product } from "../modules/product";
+import { Product } from "../modules/dataStructures";
 import { httpDelete, httpPost, httpPut } from "../modules/serviceInit";
 
 export const onAddProduct = async (e: any, app: any) => {
@@ -21,7 +21,7 @@ export const onAddProduct = async (e: any, app: any) => {
 
   if (loading) return;
   var response: any;
-  app.setState({ loading: true });
+  app.setState({ loading: true, erro: null });
   if (body?.hasOwnProperty("_id")) response = httpPut("product", body);
   else response = httpPost("product", body);
   response
