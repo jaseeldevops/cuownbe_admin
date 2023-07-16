@@ -195,12 +195,19 @@ div {
   margin: 3px 4px;
 }
 .myTableForm .d {
+  padding: 10px;
+}
+.myTableForm .dA {
+  font-weight: 600;
+  text-align: right;
+}
+.myTableForm .f {
   margin: 3px 4px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.myTableForm .dA {
+.myTableForm .fA {
   margin: 5px;
 }
 /* //////////////////////////////////////////////////////////////// */

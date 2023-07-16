@@ -7,6 +7,7 @@ import {
 } from "../methods/addPurchase";
 import { ProductInput } from "../widgets/input";
 import { getSearchProduct } from "../methods/product";
+import { Purchase, PurchaseEach } from "../modules/product";
 
 export default class AddPurchaseScreen extends Component<any> {
   constructor(props: any) {
@@ -14,7 +15,7 @@ export default class AddPurchaseScreen extends Component<any> {
     this.state = {
       error: null,
       loading: false,
-      purchase: { list: [{}] },
+      purchase: new Purchase(),
     };
   }
   componentDidMount(): void {
@@ -28,6 +29,14 @@ export default class AddPurchaseScreen extends Component<any> {
   _onClickBack = (e: any) => {
     e.preventDefault();
     this.props.setRoute("purchase");
+  };
+
+  _CalculateTotal = () => {
+    const { purchase }: any = this.state;
+    var total = 0;
+    for (let i = 0; i < purchase.list.length; i++)
+      total += purchase.list[i].price * purchase.list[i].qty;
+    return total;
   };
 
   render() {
@@ -84,6 +93,9 @@ export default class AddPurchaseScreen extends Component<any> {
               Qty
             </div>
             <div className="bA" style={{ width: "20%" }}>
+              Price (1 Unit)
+            </div>
+            <div className="bA" style={{ width: "20%" }}>
               Total Price
             </div>
           </div>
@@ -107,7 +119,7 @@ export default class AddPurchaseScreen extends Component<any> {
                 <ProductInput
                   onChange={async (v: any) => {
                     if (purchase?.list?.length === k + 1)
-                      purchase?.list.push({});
+                      purchase?.list.push(new PurchaseEach());
                     await getSearchProduct(
                       v,
                       (res: any) => (it.searches = res)
@@ -117,6 +129,7 @@ export default class AddPurchaseScreen extends Component<any> {
                   onSelect={(value: any) => {
                     delete it.searches;
                     it.product = value._id;
+                    it.price = value.purchasePrice;
                     this.setState({ purchase });
                   }}
                   datas={it.searches || []}
@@ -129,7 +142,7 @@ export default class AddPurchaseScreen extends Component<any> {
                   style={{ width: "20%" }}
                   type="number"
                   placeholder="0.00"
-                  value={it.qty ?? ""}
+                  value={it.qty}
                   onChange={(e) => {
                     it.qty = e.target.value;
                     this.setState({ purchase });
@@ -140,29 +153,38 @@ export default class AddPurchaseScreen extends Component<any> {
                   style={{ width: "20%" }}
                   type="number"
                   placeholder="0.00"
-                  value={it.totalPrice ?? ""}
+                  value={it.price}
                   onChange={(e) => {
-                    it.totalPrice = e.target.value;
+                    it.price = e.target.value;
                     this.setState({ purchase });
                   }}
                 />
+                <div className="cAb" style={{ width: "20%" }}>
+                  {it.price * it.qty}
+                </div>
               </div>
             ))}
           </div>
           <div className="d">
+            <div className="dA">Total Price : {this._CalculateTotal()}</div>
+          </div>
+          <div className="f">
             <div className="errorMsg">{error}</div>
-            <button className="dA btn2" onClick={this._onClickBack}>
+            <button className="fA btn2" onClick={this._onClickBack}>
               Back
             </button>
             {isEdit ? (
               <button
-                className="dA btn3"
+                className="fA btn3"
                 onClick={(e) => onDeletePurchase(e, this)}
               >
                 Delete
               </button>
             ) : null}
-            <button className="dA btn1" type="submit">
+            <button className="fA btn1" type="submit">
+              {isEdit ? "Save & Print" : "Add & Print"}
+            </button>
+            <button className="fA btn1" type="submit">
               {isEdit ? "Save" : "Add"}
             </button>
           </div>

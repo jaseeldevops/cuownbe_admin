@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { onAddProduct, onDeleteProduct } from "../methods/addProduct";
 import HomeLayout from "../widgets/homeLayout";
+import { Product } from "../modules/product";
 
 export default class AddProductScreen extends Component<any> {
   constructor(props: any) {
@@ -8,11 +9,13 @@ export default class AddProductScreen extends Component<any> {
     this.state = {
       error: null,
       loading: false,
-      product: {},
+      product: new Product(),
     };
   }
   componentDidMount(): void {
-    if (this.props.data) this.setState({ product: this.props.data ?? {} });
+    if (this.props.data) {
+      this.setState({ product: this.props.data });
+    }
   }
 
   _onClickBack = (e: any) => {
@@ -109,7 +112,16 @@ export default class AddProductScreen extends Component<any> {
               placeholder="0.00"
             />
           </div>
-
+          <div className="b">
+            <div className="bA">Stock*</div>
+            <input
+              className="bB"
+              value={product?.stock}
+              onChange={(e) => (product.stock = e.target.value)}
+              type="number"
+              placeholder="0.00"
+            />
+          </div>
           <div className="d">
             <div className="errorMsg">{error}</div>
             <button className="dA btn2" onClick={this._onClickBack}>

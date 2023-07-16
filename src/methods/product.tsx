@@ -1,10 +1,8 @@
 import { httpGet } from "../modules/serviceInit";
 
-export const getAllProducts = (app: any) => {
-  httpGet("products")
-    .then((res) => {
-      app.setState({ allProducts: res.data });
-    })
+export const getAllProducts = async (app: any) => {
+  await httpGet("products")
+    .then((res) => app.setState({ allProducts: res.data }))
     .catch(() => {});
 };
 

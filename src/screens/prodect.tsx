@@ -20,6 +20,9 @@ export default class ProdectScreen extends Component<any> {
   };
 
   _onClickProdect = (it: any) => {
+    it.mrp /= 100;
+    it.purchasePrice /= 100;
+    it.sellingPrice /= 100;
     this.props.setRoute("addProduct", it);
   };
 
@@ -49,14 +52,17 @@ export default class ProdectScreen extends Component<any> {
             <div className="bA" style={{ width: "70%" }}>
               Name
             </div>
-            <div className="bA" style={{ width: "15%" }}>
+            <div className="bA" style={{ width: "15%", textAlign: "right" }}>
               Purchase Price
             </div>
-            <div className="bA" style={{ width: "15%" }}>
+            <div className="bA" style={{ width: "15%", textAlign: "right" }}>
               Selling Price
             </div>
-            <div className="bA" style={{ width: "15%" }}>
+            <div className="bA" style={{ width: "15%", textAlign: "right" }}>
               MRP
+            </div>
+            <div className="bA" style={{ width: "15%", textAlign: "right" }}>
+              Stock
             </div>
           </div>
           {allProducts.map((it: any, k: any) => (
@@ -67,21 +73,24 @@ export default class ProdectScreen extends Component<any> {
               <div className="cA" style={{ width: "70%" }}>
                 {it.name}
               </div>
-              <div className="cC" style={{ width: "15%" }}>
-                {it.purchasePrice}
+              <div className="cC" style={{ width: "15%", textAlign: "right" }}>
+                {it.purchasePrice / 100}
               </div>
-              <div className="cC" style={{ width: "15%" }}>
-                {it.sellingPrice}
+              <div className="cC" style={{ width: "15%", textAlign: "right" }}>
+                {it.sellingPrice / 100}
               </div>
-              <div className="cC" style={{ width: "15%" }}>
-                {it.mrp}
+              <div className="cC" style={{ width: "15%", textAlign: "right" }}>
+                {it.mrp / 100}
+              </div>
+              <div className="cC" style={{ width: "15%", textAlign: "right" }}>
+                {it.stock}
               </div>
             </div>
           ))}
-          <div className="d">
-            <div className="dA"></div>
-            <div className="dB">
-              <div className="dBa"></div>
+          <div className="f">
+            <div className="fA"></div>
+            <div className="fB">
+              <div className="fBa"></div>
             </div>
           </div>
         </div>

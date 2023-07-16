@@ -10,21 +10,15 @@ export const onAddPurchase = (e: any, app: any) => {
   else response = httpPost("purchase", body);
 
   response
-    .then(() => {
-      app.props.setRoute("purchase");
-    })
-    .catch((e) => {
-      app.setState({ error: e.response.data?.msg });
-    });
+    .then(() => app.props.setRoute("purchase"))
+    .catch((e) => app.setState({ error: e.response.data?.msg }));
 };
 
 export const onDeletePurchase = (e: any, app: any) => {
   e.preventDefault();
   httpDelete("purchase/" + app.state.purchase._id)
-    .then(() => {
-      app.props.setRoute("purchase");
-    })
-    .catch((e) => {});
+    .then(() => app.props.setRoute("purchase"))
+    .catch((e) => app.setState({ error: e.response.data?.msg }));
 };
 
 export const getSingelPurchase = (app: any) => {
@@ -33,5 +27,5 @@ export const getSingelPurchase = (app: any) => {
       res.data?.list.push({});
       app.setState({ purchase: res.data });
     })
-    .catch((e) => {});
+    .catch((e) => app.setState({ error: e.response.data?.msg }));
 };
