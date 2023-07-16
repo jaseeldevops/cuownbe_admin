@@ -14,7 +14,7 @@ export default class App extends Component {
   constructor(props: any) {
     super(props);
     this.state = {
-      route: "addSale",
+      route: "",
       routeData: null,
     };
   }
@@ -24,11 +24,8 @@ export default class App extends Component {
   };
   render() {
     const { route, routeData }: any = this.state;
-    // return <LoginScreen setRoute={setRoute} />;
     if (route === "login")
       return <LoginScreen data={routeData} setRoute={this._setRoute} />;
-    if (route === "dashboard")
-      return <DashboardScreen data={routeData} setRoute={this._setRoute} />;
     if (route === "product")
       return <ProdectScreen data={routeData} setRoute={this._setRoute} />;
     if (route === "addProduct")
@@ -45,5 +42,6 @@ export default class App extends Component {
       return <StaffScreen data={routeData} setRoute={this._setRoute} />;
     if (route === "addStaff")
       return <AddStaffScreen data={routeData} setRoute={this._setRoute} />;
+    return <DashboardScreen data={routeData} setRoute={this._setRoute} />;
   }
 }

@@ -14,6 +14,7 @@ export default class DashboardScreen extends Component<any> {
   }
   componentDidMount(): void {
     getAllDashboardData(this);
+    
   }
 
   render() {

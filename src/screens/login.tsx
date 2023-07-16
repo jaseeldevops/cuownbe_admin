@@ -11,6 +11,7 @@ export default class LoginScreen extends Component<any> {
     };
   }
   render() {
+    const { error }: any = this.state;
     return (
       <div className="loA">
         <div className="loAa">
@@ -28,6 +29,7 @@ export default class LoginScreen extends Component<any> {
             <button className="btn1" type="submit">
               Log In
             </button>
+            <div className="errorMsg">{error}</div>
           </form>
         </div>
       </div>

@@ -7,6 +7,14 @@ export var USER: any = {};
 export const setServiceToken = (res: any) => {
   USER = res;
   TOKEN = res.org + " " + res.id;
+  localStorage.setItem("user", JSON.stringify(res));
+  localStorage.setItem("token", TOKEN);
+};
+
+export const checkAndSetServiceToken = (setScreen: any) => {
+  if (!localStorage.getItem("token")) setScreen("login");
+  USER = JSON.parse(localStorage.getItem("user") ?? "{}");
+  TOKEN = localStorage.getItem("token") ?? "";
 };
 
 export const httpGet = (endPoint: any, params?: any) => {
