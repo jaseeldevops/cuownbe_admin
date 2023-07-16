@@ -1,5 +1,5 @@
 import { Product } from "../modules/dataStructures";
-import { httpDelete, httpPost, httpPut } from "../modules/serviceInit";
+import { httpDelete, httpGet, httpPost, httpPut } from "../modules/serviceInit";
 
 export const onAddProduct = async (e: any, app: any) => {
   e.preventDefault();
@@ -16,6 +16,10 @@ export const onAddProduct = async (e: any, app: any) => {
   }
   if (body.category === "") {
     app.setState({ error: "Select category" });
+    return;
+  }
+  if (body.unit === "") {
+    app.setState({ error: "Select prodect unit" });
     return;
   }
 
@@ -39,4 +43,11 @@ export const onDeleteProduct = async (e: any, app: any) => {
     .then(() => app.props.setRoute("product"))
     .catch((e: any) => app.setState({ error: e.response.data?.msg }));
   app.setState({ loading: false });
+};
+
+export const getAllSettings = (app: any) => {
+  httpGet("units").then((res) => app.setState({ allUnits: res.data }));
+  httpGet("categories").then((res) =>
+    app.setState({ allCategories: res.data })
+  );
 };

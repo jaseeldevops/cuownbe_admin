@@ -5,7 +5,7 @@ export class Product {
   mrp: number = 0;
   purchasePrice: number = 0;
   sellingPrice: number = 0;
-  unit: string = "Unit";
+  unit: string = "";
   stock: number = 0;
 }
 

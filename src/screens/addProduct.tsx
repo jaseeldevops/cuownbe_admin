@@ -1,5 +1,9 @@
 import { Component } from "react";
-import { onAddProduct, onDeleteProduct } from "../methods/addProduct";
+import {
+  getAllSettings,
+  onAddProduct,
+  onDeleteProduct,
+} from "../methods/addProduct";
 import HomeLayout from "../widgets/homeLayout";
 import { Product } from "../modules/dataStructures";
 
@@ -10,12 +14,15 @@ export default class AddProductScreen extends Component<any> {
       error: null,
       loading: false,
       product: new Product(),
+      allUnits: [],
+      allCategories: [],
     };
   }
   componentDidMount(): void {
     if (this.props.data) {
       this.setState({ product: this.props.data });
     }
+    getAllSettings(this);
   }
 
   _onClickBack = (e: any) => {
@@ -24,7 +31,7 @@ export default class AddProductScreen extends Component<any> {
   };
 
   render() {
-    const { product, error }: any = this.state;
+    const { product, error, allUnits, allCategories }: any = this.state;
     const isEdit = product?.hasOwnProperty("_id");
 
     return (
@@ -61,21 +68,34 @@ export default class AddProductScreen extends Component<any> {
           </div>
           <div className="b">
             <div className="bA">Category*</div>
-            <input
+
+            <select
               className="bB"
               value={product?.category}
               onChange={(e) => (product.category = e.target.value)}
-              placeholder="Select Category"
-            />
+            >
+              <option hidden>Select Category</option>
+              {allCategories.map((it: any, k: any) => (
+                <option key={k} value={it._id}>
+                  {it.title}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="b">
             <div className="bA">Selling Unit*</div>
-            <input
+            <select
               className="bB"
               value={product?.unit}
               onChange={(e) => (product.unit = e.target.value)}
-              placeholder="Kg"
-            />
+            >
+              <option hidden>Select Unit</option>
+              {allUnits.map((it: any, k: any) => (
+                <option key={k} value={it._id}>
+                  {it.title}({it.unit})
+                </option>
+              ))}
+            </select>
           </div>
           {/*  */}
           <div className="a">
