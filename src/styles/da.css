@@ -1,0 +1,45 @@
+.da {
+  height: calc(100vh - 70px);
+  background-color: #00000005;
+}
+.daA {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+.daAa {
+  width: 300px;
+  max-height: 79px;
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #0000001a;
+  border-radius: 5px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+.daAaA {
+  width: 55px;
+  height: 55px;
+  border-radius: 5px;
+  background-color: #2695f06c;
+  background-image: url(../assets/icDashboard.svg);
+  background-size: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.daAaB {
+  padding-left: 10px;
+}
+.daAaBa {
+  color: #2695f0;
+  font-size: 18px;
+  font-weight: bold;
+}
+.daAaBb {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.491);
+}

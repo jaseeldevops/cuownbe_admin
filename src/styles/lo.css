@@ -1,0 +1,53 @@
+.loA {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(245, 245, 245);
+}
+.loAa {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  margin: 20px;
+  padding: 50px;
+  padding-left: 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px #0000001a;
+  background-color: white;
+  box-sizing: border-box;
+}
+.loAaA {
+  width: 60%;
+  min-height: 100px;
+  background-image: url(../assets/loginSide.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 10px;
+}
+.loAaB {
+  width: 40%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.loAaBa {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 8px 0;
+}
+.loAaBb {
+  margin: 8px 0;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid #0000001a;
+  font-size: 15px;
+  width: 100%;
+}
+.loAaBb:focus {
+  outline: none;
+  border-bottom: 1px solid #2695f0;
+}
