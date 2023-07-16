@@ -170,16 +170,16 @@ export default class AddPurchaseScreen extends Component<any> {
           </div>
           <div className="f">
             <div className="errorMsg">{error}</div>
-            <button className="fA btn2" onClick={this._onClickBack}>
+            <div className="fA btn2" onClick={this._onClickBack}>
               Back
-            </button>
+            </div>
             {isEdit ? (
-              <button
+              <div
                 className="fA btn3"
                 onClick={(e) => onDeletePurchase(e, this)}
               >
                 Delete
-              </button>
+              </div>
             ) : null}
             <button className="fA btn1" type="submit">
               {isEdit ? "Save & Print" : "Add & Print"}
