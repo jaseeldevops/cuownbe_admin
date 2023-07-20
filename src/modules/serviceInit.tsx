@@ -1,6 +1,8 @@
 import axios from "axios";
 
-var BASE_URL = "http://localhost:9000/a1/";
+var BASE_URL = "http://cuownbe.co.in:9000/a1/";
+if (window.location.hostname === "localhost")
+  BASE_URL = "http://localhost:9000/a1/";
 var TOKEN = "cuownbe i23";
 export var USER: any = {};
 
